@@ -1,0 +1,31 @@
+MPC-HC 2.8.3 Touchpad Inspection Edition - verification
+
+Base: upstream 2.8.3, commit 7bcb746166de30297222a3f5f6d49d747dd7dd51.
+Custom x64 Release player built with Visual Studio 2022 / MSVC 14.44,
+Windows SDK 10.0.26100.0 and NASM 2.16.03. Build: 0 errors, 16 warnings.
+Supporting DLLs are from the matching upstream x64 portable release.
+
+Standalone geometry tests compiled with /W4 and passed with 0 failures.
+Coverage includes pointer anchoring, zoom limits, high-resolution deltas,
+pan bounds, letterboxing, resize normalization, reset, and invalid input.
+
+Native Windows UI tests used a generated calibration video and the bundled
+MPC Video Renderer. Verified paused-frame pointer-centered keyboard zoom,
+drag-to-pan without resuming playback, reset to the original framing,
+fullscreen zoom/pan, and retained framing when returning to windowed mode.
+Ordinary mouse wheel still changed volume (100% to 95%) without zooming.
+
+Revision 2 HLS navigation regression: the original executable skipped a local
+M3U8 manifest between two MP4 files. The updated executable opens the HLS
+manifest in both directions and navigates back out to its neighboring MP4s.
+The fixture contains fifteen 2-second MPEG-TS segments; playback reports the
+combined 30-second duration and plays across segment boundaries.
+
+Not verified: physical laptop pinch events, other touchpad drivers, madVR,
+EVR Custom Presenter, or every codec/container. Pinch uses Windows Ctrl+wheel
+messages; drivers that do not emit these require another input adapter.
+Ctrl+wheel and Ctrl+= / Ctrl+- offer alternative zoom controls.
+System EVR, DVD menus and interactive video are excluded from inspection.
+
+This is an unofficial, unsigned custom build. It is not an upstream release.
+Keep the complete folder together, including the portable settings INI.
